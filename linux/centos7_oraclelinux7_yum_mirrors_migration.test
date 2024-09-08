@@ -1,0 +1,567 @@
+sh-4.2# cat /etc/redhat-release 
+CentOS Linux release 7.9.2009 (AltArch)
+
+------------------------
+
+sh-4.2# yum clean all
+Loaded plugins: fastestmirror, ovl
+Cleaning repos: base epel extras updates
+Cleaning up list of fastest mirrors
+
+sh-4.2# yum makecache
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=7&arch=aarch64&repo=os&infra=container error was
+14: curl#6 - "Could not resolve host: mirrorlist.centos.org; Unknown error"
+
+
+ One of the configured repositories failed (Unknown),
+ and yum doesn't have enough cached data to continue. At this point the only
+ safe thing yum can do is fail. There are a few ways to work "fix" this:
+
+     1. Contact the upstream for the repository and get them to fix the problem.
+
+     2. Reconfigure the baseurl/etc. for the repository, to point to a working
+        upstream. This is most often useful if you are using a newer
+        distribution release than is supported by the repository (and the
+        packages for the previous distribution release still work).
+
+     3. Run the command with the repository temporarily disabled
+            yum --disablerepo=<repoid> ...
+
+     4. Disable the repository permanently, so yum won't use it by default. Yum
+        will then just ignore the repository until you permanently enable it
+        again or use --enablerepo for temporary usage:
+
+            yum-config-manager --disable <repoid>
+        or
+            subscription-manager repos --disable=<repoid>
+
+     5. Configure the failing repository to be skipped, if it is unavailable.
+        Note that yum will try to contact the repo. when it runs most commands,
+        so will have to try and fail each time (and thus. yum will be be much
+        slower). If it is a very temporary problem though, this is often a nice
+        compromise:
+
+            yum-config-manager --save --setopt=<repoid>.skip_if_unavailable=true
+
+Cannot find a valid baseurl for repo: base/7/aarch64
+
+------------------------
+
+sh-4.2# sudo
+sh: sudo: command not found
+
+sh-4.2# yum install sudo
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=7&arch=aarch64&repo=os&infra=container error was
+14: curl#6 - "Could not resolve host: mirrorlist.centos.org; Unknown error"
+
+
+ One of the configured repositories failed (Unknown),
+ and yum doesn't have enough cached data to continue. At this point the only
+ safe thing yum can do is fail. There are a few ways to work "fix" this:
+
+     1. Contact the upstream for the repository and get them to fix the problem.
+
+     2. Reconfigure the baseurl/etc. for the repository, to point to a working
+        upstream. This is most often useful if you are using a newer
+        distribution release than is supported by the repository (and the
+        packages for the previous distribution release still work).
+
+     3. Run the command with the repository temporarily disabled
+            yum --disablerepo=<repoid> ...
+
+     4. Disable the repository permanently, so yum won't use it by default. Yum
+        will then just ignore the repository until you permanently enable it
+        again or use --enablerepo for temporary usage:
+
+            yum-config-manager --disable <repoid>
+        or
+            subscription-manager repos --disable=<repoid>
+
+     5. Configure the failing repository to be skipped, if it is unavailable.
+        Note that yum will try to contact the repo. when it runs most commands,
+        so will have to try and fail each time (and thus. yum will be be much
+        slower). If it is a very temporary problem though, this is often a nice
+        compromise:
+
+            yum-config-manager --save --setopt=<repoid>.skip_if_unavailable=true
+
+Cannot find a valid baseurl for repo: base/7/aarch64
+
+------------------------
+
+sh-4.2# wget https://raw.githubusercontent.com/robsoncombr/caverna.digital/main/linux/centos7_oraclelinux7_yum_mirrors_migration.sh -P ~/
+--2024-09-08 02:31:29--  https://raw.githubusercontent.com/robsoncombr/caverna.digital/main/linux/centos7_oraclelinux7_yum_mirrors_migration.sh
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.111.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 12370 (12K) [text/plain]
+Saving to: ‘/root/centos7_oraclelinux7_yum_mirrors_migration.sh’
+
+100%[=================================================================================================>] 12,370      --.-K/s   in 0s      
+
+2024-09-08 02:31:29 (96.8 MB/s) - ‘/root/centos7_oraclelinux7_yum_mirrors_migration.sh’ saved [12370/12370]
+
+------------------------
+
+sh-4.2# cd
+sh-4.2# chmod +x centos7_oraclelinux7_yum_mirrors_migration.sh 
+
+------------------------
+
+sh-4.2# ./centos7_oraclelinux7_yum_mirrors_migration.sh 
+
+Usage: ./centos7_oraclelinux7_yum_mirrors_migration.sh {status|migrate|rollback}
+
+------------------------
+
+sh-4.2# ./centos7_oraclelinux7_yum_mirrors_migration.sh status
+
+Checking system status...
+
+Migration Status: NOT PRESENT! No migration applied.
+Backup Status: WARNING! No previous migration backup was found.
+
+------------------------
+
+sh-4.2# ./centos7_oraclelinux7_yum_mirrors_migration.sh migrate
+
+Are you sure you want to migrate to the Oracle Linux 7 repository?
+This will backup your existing repositories and disable them.
+You can rollback later if needed. Please confirm (y/N): y
+
+Backing up current yum repositories to /etc/yum.repos.d.migration.bak...
+
+Disabling base, updates, and extras repositories...
+Loaded plugins: fastestmirror, ovl
+=============================================================== repo: base ================================================================
+[base]
+async = True
+bandwidth = 0
+base_persistdir = /var/lib/yum/repos/aarch64/7
+baseurl = 
+cache = 0
+cachedir = /var/cache/yum/aarch64/7/base
+check_config_file_age = True
+compare_providers_priority = 80
+cost = 1000
+deltarpm_metadata_percentage = 100
+deltarpm_percentage = 
+enabled = 0
+enablegroups = True
+exclude = 
+failovermethod = priority
+ftp_disable_epsv = False
+gpgcadir = /var/lib/yum/repos/aarch64/7/base/gpgcadir
+gpgcakey = 
+gpgcheck = True
+gpgdir = /var/lib/yum/repos/aarch64/7/base/gpgdir
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7,
+   file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7-aarch64
+hdrdir = /var/cache/yum/aarch64/7/base/headers
+http_caching = all
+includepkgs = 
+ip_resolve = 
+keepalive = True
+keepcache = False
+mddownloadpolicy = sqlite
+mdpolicy = group:small
+mediaid = 
+metadata_expire = 21600
+metadata_expire_filter = read-only:present
+metalink = 
+minrate = 0
+mirrorlist = http://mirrorlist.centos.org/?release=7&arch=aarch64&repo=os&infra=container
+mirrorlist_expire = 86400
+name = CentOS-7 - Base
+old_base_cache_dir = 
+password = 
+persistdir = /var/lib/yum/repos/aarch64/7/base
+pkgdir = /var/cache/yum/aarch64/7/base/packages
+proxy = False
+proxy_dict = 
+proxy_password = 
+proxy_username = 
+repo_gpgcheck = False
+retries = 10
+skip_if_unavailable = False
+ssl_check_cert_permissions = True
+sslcacert = 
+sslclientcert = 
+sslclientkey = 
+sslverify = True
+throttle = 0
+timeout = 30.0
+ui_id = base/7/aarch64
+ui_repoid_vars = releasever,
+   basearch
+username = 
+
+Loaded plugins: fastestmirror, ovl
+============================================================== repo: updates ==============================================================
+[updates]
+async = True
+bandwidth = 0
+base_persistdir = /var/lib/yum/repos/aarch64/7
+baseurl = 
+cache = 0
+cachedir = /var/cache/yum/aarch64/7/updates
+check_config_file_age = True
+compare_providers_priority = 80
+cost = 1000
+deltarpm_metadata_percentage = 100
+deltarpm_percentage = 
+enabled = 0
+enablegroups = True
+exclude = 
+failovermethod = priority
+ftp_disable_epsv = False
+gpgcadir = /var/lib/yum/repos/aarch64/7/updates/gpgcadir
+gpgcakey = 
+gpgcheck = True
+gpgdir = /var/lib/yum/repos/aarch64/7/updates/gpgdir
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7,
+   file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7-aarch64
+hdrdir = /var/cache/yum/aarch64/7/updates/headers
+http_caching = all
+includepkgs = 
+ip_resolve = 
+keepalive = True
+keepcache = False
+mddownloadpolicy = sqlite
+mdpolicy = group:small
+mediaid = 
+metadata_expire = 21600
+metadata_expire_filter = read-only:present
+metalink = 
+minrate = 0
+mirrorlist = http://mirrorlist.centos.org/?release=7&arch=aarch64&repo=updates&infra=container
+mirrorlist_expire = 86400
+name = CentOS-7 - Updates
+old_base_cache_dir = 
+password = 
+persistdir = /var/lib/yum/repos/aarch64/7/updates
+pkgdir = /var/cache/yum/aarch64/7/updates/packages
+proxy = False
+proxy_dict = 
+proxy_password = 
+proxy_username = 
+repo_gpgcheck = False
+retries = 10
+skip_if_unavailable = False
+ssl_check_cert_permissions = True
+sslcacert = 
+sslclientcert = 
+sslclientkey = 
+sslverify = True
+throttle = 0
+timeout = 30.0
+ui_id = updates/7/aarch64
+ui_repoid_vars = releasever,
+   basearch
+username = 
+
+Loaded plugins: fastestmirror, ovl
+============================================================== repo: extras ===============================================================
+[extras]
+async = True
+bandwidth = 0
+base_persistdir = /var/lib/yum/repos/aarch64/7
+baseurl = 
+cache = 0
+cachedir = /var/cache/yum/aarch64/7/extras
+check_config_file_age = True
+compare_providers_priority = 80
+cost = 1000
+deltarpm_metadata_percentage = 100
+deltarpm_percentage = 
+enabled = 0
+enablegroups = True
+exclude = 
+failovermethod = priority
+ftp_disable_epsv = False
+gpgcadir = /var/lib/yum/repos/aarch64/7/extras/gpgcadir
+gpgcakey = 
+gpgcheck = True
+gpgdir = /var/lib/yum/repos/aarch64/7/extras/gpgdir
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7,
+   file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7-aarch64
+hdrdir = /var/cache/yum/aarch64/7/extras/headers
+http_caching = all
+includepkgs = 
+ip_resolve = 
+keepalive = True
+keepcache = False
+mddownloadpolicy = sqlite
+mdpolicy = group:small
+mediaid = 
+metadata_expire = 21600
+metadata_expire_filter = read-only:present
+metalink = 
+minrate = 0
+mirrorlist = http://mirrorlist.centos.org/?release=7&arch=aarch64&repo=extras&infra=container
+mirrorlist_expire = 86400
+name = CentOS-7 - Extras
+old_base_cache_dir = 
+password = 
+persistdir = /var/lib/yum/repos/aarch64/7/extras
+pkgdir = /var/cache/yum/aarch64/7/extras/packages
+proxy = False
+proxy_dict = 
+proxy_password = 
+proxy_username = 
+repo_gpgcheck = False
+retries = 10
+skip_if_unavailable = False
+ssl_check_cert_permissions = True
+sslcacert = 
+sslclientcert = 
+sslclientkey = 
+sslverify = True
+throttle = 0
+timeout = 30.0
+ui_id = extras/7/aarch64
+ui_repoid_vars = releasever,
+   basearch
+username = 
+
+Disabling all existing repositories with sed while preserving original spacing...
+Adding Oracle Linux 7 repository...
+Cleaning yum cache and updating...
+
+Loaded plugins: fastestmirror, ovl
+Cleaning repos: ol7_latest ol7_optional_latest
+Cleaning up list of fastest mirrors
+
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+ol7_latest                                     | 3.6 kB  00:00:00
+ol7_optional_latest                            | 3.0 kB  00:00:00
+(1/9): ol7_latest/group_gz                     | 133 kB  00:00:00
+(2/9): ol7_latest/updateinfo                   | 2.6 MB  00:00:00
+(3/9): ol7_latest/filelists_db                 |  72 MB  00:00:03
+(4/9): ol7_optional_latest/updateinfo          | 1.5 MB  00:00:00
+(5/9): ol7_optional_latest/primary_db          | 5.5 MB  00:00:00
+(6/9): ol7_latest/other_db                     |  14 MB  00:00:01
+(7/9): ol7_optional_latest/other_db            | 4.0 MB  00:00:00
+(8/9): ol7_optional_latest/filelists_db        |  13 MB  00:00:01
+(9/9): ol7_latest/primary_db                   | 124 MB  00:00:07
+Metadata Cache Created
+
+> COMPLETED! Oracle Linux 7 repository is now migrated.
+
+------------------------
+
+sh-4.2# yum install sudo
+Loaded plugins: fastestmirror, ovl
+Loading mirror speeds from cached hostfile
+Resolving Dependencies
+--> Running transaction check
+---> Package sudo.aarch64 0:1.8.23-10.el7_9.3 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+===========================================================================================================================================
+ Package                    Arch                          Version                                   Repository                        Size
+===========================================================================================================================================
+Installing:
+ sudo                       aarch64                       1.8.23-10.el7_9.3                         ol7_latest                       817 k
+
+Transaction Summary
+===========================================================================================================================================
+Install  1 Package
+
+Total download size: 817 k
+Installed size: 3.5 M
+Is this ok [y/d/N]: y
+Downloading packages:
+warning: /var/cache/yum/aarch64/7/ol7_latest/packages/sudo-1.8.23-10.el7_9.3.aarch64.rpm: Header V3 RSA/SHA256 Signature, key ID ec551f03: NOKEY
+Public key for sudo-1.8.23-10.el7_9.3.aarch64.rpm is not installed
+sudo-1.8.23-10.el7_9.3.aarch64.rpm                                                                                  | 817 kB  00:00:00     
+Retrieving key from https://yum.oracle.com/RPM-GPG-KEY-oracle-ol7
+Importing GPG key 0xEC551F03:
+ Userid     : "Oracle OSS group (Open Source Software group) <build@oss.oracle.com>"
+ Fingerprint: 4214 4123 fecf c55b 9086 313d 72f9 7b74 ec55 1f03
+ From       : https://yum.oracle.com/RPM-GPG-KEY-oracle-ol7
+Is this ok [y/N]: y
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : sudo-1.8.23-10.el7_9.3.aarch64                                                                                          1/1 
+  Verifying  : sudo-1.8.23-10.el7_9.3.aarch64                                                                                          1/1 
+
+Installed:
+  sudo.aarch64 0:1.8.23-10.el7_9.3                                                                                                         
+
+Complete!
+
+------------------------
+
+sh-4.2# yum list installed search sudo
+Loaded plugins: fastestmirror, ovl
+Loading mirror speeds from cached hostfile
+Installed Packages
+sudo.aarch64                                                 1.8.23-10.el7_9.3                                                  @ol7_latest
+
+------------------------
+
+sh-4.2# ls -la /etc/sudoers
+-r--r-----. 1 root root 4328 Jan 23  2023 /etc/sudoers
+
+sh-4.2# command -v sudo
+/usr/bin/sudo
+
+sh-4.2# sudo -V
+Sudo version 1.8.23
+Configure options: --build=aarch64-redhat-linux-gnu --host=aarch64-redhat-linux-gnu --program-prefix= --disable-dependency-tracking --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share --includedir=/usr/include --libdir=/usr/lib64 --libexecdir=/usr/libexec --localstatedir=/var --sharedstatedir=/var/lib --mandir=/usr/share/man --infodir=/usr/share/info --prefix=/usr --sbindir=/usr/sbin --libdir=/usr/lib64 --docdir=/usr/share/doc/sudo-1.8.23 --with-logging=syslog --with-logfac=authpriv --with-pam --with-pam-login --with-editor=/usr/bin/vi --with-env-editor --enable-gcrypt --with-ignore-dot --with-tty-tickets --with-ldap --with-ldap-conf-file=/etc/sudo-ldap.conf --with-selinux --with-passprompt=[sudo] password for %p:  --with-linux-audit --with-sssd
+Sudoers policy plugin version 1.8.23
+Sudoers file grammar version 46
+
+Sudoers path: /etc/sudoers
+nsswitch path: /etc/nsswitch.conf
+ldap.conf path: /etc/sudo-ldap.conf
+ldap.secret path: /etc/ldap.secret
+Authentication methods: 'pam'
+Syslog facility if syslog is being used for logging: authpriv
+Syslog priority to use when user authenticates successfully: notice
+Syslog priority to use when user authenticates unsuccessfully: alert
+Ignore '.' in $PATH
+Send mail if the user is not in sudoers
+Lecture user the first time they run sudo
+Require users to authenticate by default
+Root may run sudo
+Always set $HOME to the target user's home directory
+Allow some information gathering to give useful error messages
+Visudo will honor the EDITOR environment variable
+Set the LOGNAME and USER environment variables
+Length at which to wrap log file lines (0 for no wrap): 80
+Authentication timestamp timeout: 18000.0 minutes
+Password prompt timeout: 18000.0 minutes
+Number of tries to enter a password: 3
+Umask to use or 0777 to use user's: 022
+Path to mail program: /usr/sbin/sendmail
+Flags for mail program: -t
+Address to send mail to: root
+Subject line for mail messages: *** SECURITY information for %h ***
+Incorrect password message: Sorry, try again.
+Path to lecture status dir: /var/db/sudo/lectured
+Path to authentication timestamp dir: /run/sudo/ts
+Default password prompt: [sudo] password for %p: 
+Default user to run commands as: root
+Value to override user's $PATH with: /sbin:/bin:/usr/sbin:/usr/bin
+Path to the editor for use by visudo: /usr/bin/vi
+When to require a password for 'list' pseudocommand: any
+When to require a password for 'verify' pseudocommand: all
+File descriptors >= 3 will be closed before executing a command
+Reset the environment to a default set of variables
+Environment variables to check for sanity:
+        TZ
+        TERM
+        LINGUAS
+        LC_*
+        LANGUAGE
+        LANG
+        COLORTERM
+Environment variables to remove:
+        *=()*
+        RUBYOPT
+        RUBYLIB
+        PYTHONUSERBASE
+        PYTHONINSPECT
+        PYTHONPATH
+        PYTHONHOME
+        TMPPREFIX
+        ZDOTDIR
+        READNULLCMD
+        NULLCMD
+        FPATH
+        PERL5DB
+        PERL5OPT
+        PERL5LIB
+        PERLLIB
+        PERLIO_DEBUG 
+        JAVA_TOOL_OPTIONS
+        SHELLOPTS
+        BASHOPTS
+        GLOBIGNORE
+        PS4
+        BASH_ENV
+        ENV
+        TERMCAP
+        TERMPATH
+        TERMINFO_DIRS
+        TERMINFO
+        _RLD*
+        LD_*
+        PATH_LOCALE
+        NLSPATH
+        HOSTALIASES
+        RES_OPTIONS
+        LOCALDOMAIN
+        CDPATH
+        IFS
+Environment variables to preserve:
+        XAUTHORITY
+        _XKB_CHARSET
+        LINGUAS
+        LANGUAGE
+        LC_ALL
+        LC_TIME
+        LC_TELEPHONE
+        LC_PAPER
+        LC_NUMERIC
+        LC_NAME
+        LC_MONETARY
+        LC_MESSAGES
+        LC_MEASUREMENT
+        LC_IDENTIFICATION
+        LC_COLLATE
+        LC_CTYPE
+        LC_ADDRESS
+        LANG
+        USERNAME
+        QTDIR
+        PS2
+        PS1
+        MAIL
+        LS_COLORS
+        KDEDIR
+        HISTSIZE
+        HOSTNAME
+        DISPLAY
+        COLORS
+Locale to use while parsing sudoers: C
+Compress I/O logs using zlib
+Directory in which to store input/output logs: /var/log/sudo-io
+File in which to store the input/output log: %{seq}
+Add an entry to the utmp/utmpx file when allocating a pty
+PAM service name to use: sudo
+PAM service name to use for login shells: sudo-i
+Attempt to establish PAM credentials for the target user
+Create a new PAM session for the command to run in
+Maximum I/O log sequence number: 0
+Enable sudoers netgroup support
+Check parent directories for writability when editing files with sudoedit
+Query the group plugin for unknown system groups
+Allow commands to be run even if sudo cannot write to the audit log
+Allow commands to be run even if sudo cannot write to the log file
+Resolve groups in sudoers and match on the group ID, not the name
+Log entries larger than this value will be split into multiple syslog messages: 960
+File mode to use for the I/O log files: 0600
+Execute commands by file descriptor instead of by path: digest_only
+Type of authentication timestamp record: tty
+Ignore case when matching user names
+Ignore case when matching group names
+Don't pre-resolve all group names
+Perform PAM account validation management
+
+Local IP address and netmask pairs:
+        172.21.0.2/255.255.0.0
+
+Sudoers I/O plugin version 1.8.23
+sh-4.2# 
